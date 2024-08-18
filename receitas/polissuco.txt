@@ -1,0 +1,12 @@
+Q: I 12 Hemer 1/4 de ant 4 sangue 16 descura 3 dracmas arambola salpete cabelo F
+I: I
+F: F
+I -> Hemer | H
+Hemer -> sangue | S
+sangue -> descura | D
+descura -> dracmas | d
+dracmas -> arambola | A
+arambola -> salpete | s
+salpete -> cabelo | C
+cabelo -> erro | o
+F -> erro | o
