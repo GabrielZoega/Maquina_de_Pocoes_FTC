@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "pilha.h"
 
 //estado de partida, estado de destino, entrada
 typedef struct transicao{
@@ -18,7 +19,7 @@ typedef struct transicao{
 //estado partida, desempilha, empilha, estado de destino
 typedef struct transicaoP{
     Transicao transicao;
-    //estrutura de pilha
+    Pilha stack;
 }TransicaoP;
 
 typedef struct maquinaAfd{
@@ -34,8 +35,7 @@ typedef struct maquinaAP{
     char estadoInicial[TAM_ESTADO];
     char estadoFinal[TAM_ESTADO];
     char estadoAtual[TAM_ESTADO];
-    Transicao *transicoes;
-    // Pilha pilha;
+    TransicaoP *transicoesP;
 
     // talvez adicionar o resto da palavra 
 } MaquinaDeEstadosAP;
