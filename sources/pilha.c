@@ -14,7 +14,7 @@ int PEhVazia(Pilha *pilha){
 void PEmpilha(Pilha *pilha, char caractere){
     apontador pNovo;
     pNovo = (apontador) malloc (sizeof(Celula));
-    if(pNovo == NULL) return 0;
+    if(pNovo == NULL) return;
 
     pNovo->caractere = caractere;
     pNovo->pProx = pilha->pTopo;
@@ -26,7 +26,7 @@ char PDesempilha(Pilha* pilha){
 
     apontador pAux;
     char caractere;
-    if (PEhVazia(pilha)) return "!";
+    if (PEhVazia(pilha)) return '!';
 
     pAux = pilha->pTopo;
     pilha->pTopo = pAux->pProx;
@@ -39,5 +39,5 @@ char PDesempilha(Pilha* pilha){
 
 
 int PTamanho(Pilha* pilha){
-    return (pilha->pTopo);
+    return (pilha->tamanho);
 }
