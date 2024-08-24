@@ -10,3 +10,4 @@ arambola -> salpete | s
 salpete -> cabelo | C
 cabelo -> erro | o
 F -> erro | o
+---
