@@ -2,14 +2,20 @@
 #define MAQUINAS_H
 
 #define TAM_ESTADO 8
+#define TAM_POCAO 50
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "pilha.h"
 
-#define AP 0
 #define AFD 1
+#define AP 2
+
+typedef struct estadoFinal{
+    char nomeEstado[TAM_ESTADO];
+    char nomePocao[TAM_POCAO];
+}EstadoFinal;
 
 //estado de partida, estado de destino, entrada
 typedef struct transicao{
@@ -21,14 +27,14 @@ typedef struct transicao{
 //estado partida, desempilha, empilha, estado de destino
 typedef struct transicaoP{
     Transicao transicao;
-    char charEmpilha;
+    char *charEmpilha;
     char charDesempilha;
 }TransicaoP;
 
 typedef struct maquinaAfd{
     char **estados;
     char estadoInicial[TAM_ESTADO];
-    char estadoFinal[TAM_ESTADO];
+    EstadoFinal estadoFinal;
     char estadoAtual[TAM_ESTADO];
     int numTransicoes;
     Transicao *transicoes;
@@ -37,7 +43,7 @@ typedef struct maquinaAfd{
 typedef struct maquinaAP{
     char **estados;
     char estadoInicial[TAM_ESTADO];
-    char estadoFinal[TAM_ESTADO];
+    EstadoFinal estadoFinal;
     char estadoAtual[TAM_ESTADO];
     int numTransicoes;
     Pilha stack;
@@ -62,11 +68,15 @@ void adicionaEstado(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquina
 void adicionaEstadoAF(MaquinaDeEstadosAFD *maquina, char *estado, int indice);
 void adicionaEstadoAP(MaquinaDeEstadosAP *maquina, char *estado, int indice);
 
-void adicionaTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice, int tipoAutomato);
+void adicionaTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice, int tipoAutomato, char *caractereEmpilha, char caractereDesempilha);
 void adicionaTransicaoAF(MaquinaDeEstadosAFD *maquina, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice);
-void adicionaTransicaoAP(MaquinaDeEstadosAP *maquina, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice);
+void adicionaTransicaoAP(MaquinaDeEstadosAP *maquina, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice,char caractereEmpilha, char caractereDesempilha);
 
+void fazerTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char caractereEntrada, /*char *caractereEmpilha, char caractereDesempilha, */char *nomePocao, int tipoAutomato);
 void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD * maquina, char *nomePocao);
 void fazerTransicaoAPD(char caractereEntrada, char* caractereEmpilha, char caractereDesempilha, MaquinaDeEstadosAP* maquina,char *nomePocao);
 
+void resultado(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, int tipoAutomato);
+void resultadoAFD(MaquinaDeEstadosAFD *maquina);
+void resultadoAP(MaquinaDeEstadosAP *maquina);
 #endif

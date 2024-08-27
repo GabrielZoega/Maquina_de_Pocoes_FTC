@@ -1,5 +1,7 @@
 #include "../headers/leituraReceitas.h"
 
+
+//TODO: mudar a leitura pra conseguir ler apd
 int contaEstados(char *string) {
     int cont = 0;
     char aux[100];
