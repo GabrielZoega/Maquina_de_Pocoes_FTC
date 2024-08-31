@@ -11,10 +11,8 @@ void inicializaAFD(MaquinaDeEstadosAFD *maquina, int numEstados, int numTransico
 }
 
 void inicializaAP(MaquinaDeEstadosAP *maquina, int numEstados, int numTransicoes){
-    Pilha pilha;// nao precisa de declarar essa pilha aqui pro stack receber, pode sóusar o FPVazia direto
     alocaEstadosAP(maquina, numEstados);
     alocaTransicoesAP(maquina, numTransicoes);
-    maquina->stack = pilha;
     FPVazia(&(maquina->stack));
 }
 
@@ -114,13 +112,6 @@ void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD *maquina){
         
         if((strcmp(maquina->transicoes[i].estadoDePartida, maquina->estadoAtual) == 0) && (maquina->transicoes[i].caracterDeEntrada == caractereEntrada)){
             strcpy(maquina->estadoAtual, maquina->transicoes[i].estadoDeDestino);
-            // printf("Estado Partida: %s \n", maquina->transicoes[i].estadoDePartida);
-            // printf("Estado atual apos transicao: %s \n", maquina->estadoAtual);
-            // printf("caractereEntrada Transicao: %c \n", maquina->transicoes[i].caracterDeEntrada);
-            // printf("caractereEntrada Funcao: %c \n", caractereEntrada);
-            // printf("Estado de Destino: %s \n", maquina->transicoes[i].estadoDeDestino);
-            //if(strcmp(maquina->estadoAtual, "erro") == 0) printf("Erro na mistura\n");
-            //if(strcmp(maquina->estadoAtual, maquina->estadoFinal.nomeEstado) == 0) printf("%s\n", nomePocao);
             break;
         }
     }
@@ -142,18 +133,6 @@ void fazerTransicaoAPD(char caractereEntrada, MaquinaDeEstadosAP* maquina){
                 imprimeReacao(maquina->transicoesP[i].charEmpilha[j]);
             }
             strcpy(maquina->estadoAtual, maquina->transicoesP[i].transicao.estadoDeDestino);
-
-            // printf("\nEstado Partida: %s \n", maquina->transicoesP[i].transicao.estadoDePartida);
-            // printf("Estado atual apos transicao: %s \n", maquina->estadoAtual);
-            // printf("caractereEntrada Transicao: %c \n", maquina->transicoesP[i].transicao.caracterDeEntrada);
-            // printf("caractereEntrada Funcao: %c \n", caractereEntrada);
-            // printf("Estado de Destino: %s \n", maquina->transicoesP[i].transicao.estadoDeDestino);
-            // printf("Caractere Empilha: %s \n", maquina->transicoesP[i].charEmpilha);
-            // printf("Caractere Desempilha: %c \n", maquina->transicoesP[i].charDesempilha);
-            // printf("Caractere no topo da pilha: %c \n", caractereDesempilha);
-
-            //if(strcmp(maquina->estadoAtual, "erro") == 0) printf("Erro na mistura\n");
-            //if(strcmp(maquina->estadoAtual, maquina->estadoFinal.nomeEstado) == 0 && (PEhVazia(&maquina->stack))) printf("%s\n", nomePocao);
         }
     }  
 }
