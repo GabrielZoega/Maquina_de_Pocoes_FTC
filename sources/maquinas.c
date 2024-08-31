@@ -30,8 +30,6 @@ void alocaEstadosAF(MaquinaDeEstadosAFD *maquina, int numEstados){
         strcpy(maquina->estados[i], "");
     }
     strcpy(maquina->estadoAtual, maquina->estadoInicial);
-    strcpy(maquina->estadoFinal.nomeEstado, "");
-    strcpy(maquina->estadoInicial, "");
 }
 
 void alocaEstadosAP(MaquinaDeEstadosAP *maquina, int numEstados){
@@ -41,8 +39,6 @@ void alocaEstadosAP(MaquinaDeEstadosAP *maquina, int numEstados){
         strcpy(maquina->estados[i], "");
     }
     strcpy(maquina->estadoAtual, maquina->estadoInicial);
-    strcpy(maquina->estadoFinal.nomeEstado, "");
-    strcpy(maquina->estadoInicial, "");
 }
 
 void alocaTransicoes(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, int numTransicoes, int tipoAutomato){
@@ -108,21 +104,21 @@ void adicionaTransicaoAP(MaquinaDeEstadosAP *maquina, char *estadoPartida, char 
     }
 }
 
-void fazerTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char caractereEntrada /*, char *caractereEmpilha, char caractereDesempilha */, char *nomePocao, int tipoAutomato){
-	if(tipoAutomato == AFD) fazerTransicaoAFD(caractereEntrada, maquinaAFD, nomePocao);
-	//else if(tipoAutomato == AP) fazerTransicaoAPD(caractereEntrada, caractereEmpilha, caractereDesempilha, maquinaAP, nomePocao);
+void fazerTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char caractereEntrada, int tipoAutomato){
+	if(tipoAutomato == AFD) fazerTransicaoAFD(caractereEntrada, maquinaAFD);
+	else if(tipoAutomato == AP) fazerTransicaoAPD(caractereEntrada, maquinaAP);
 }
 
-void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD *maquina, char *nomePocao){
+void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD *maquina){
     for(int i = 0; i < maquina->numTransicoes; i++){
         
         if((strcmp(maquina->transicoes[i].estadoDePartida, maquina->estadoAtual) == 0) && (maquina->transicoes[i].caracterDeEntrada == caractereEntrada)){
             strcpy(maquina->estadoAtual, maquina->transicoes[i].estadoDeDestino);
-            printf("Estado Partida: %s \n", maquina->transicoes[i].estadoDePartida);
-            printf("Estado atual apos transicao: %s \n", maquina->estadoAtual);
-            printf("caractereEntrada Transicao: %c \n", maquina->transicoes[i].caracterDeEntrada);
-            printf("caractereEntrada Funcao: %c \n", caractereEntrada);
-            printf("Estado de Destino: %s \n", maquina->transicoes[i].estadoDeDestino);
+            // printf("Estado Partida: %s \n", maquina->transicoes[i].estadoDePartida);
+            // printf("Estado atual apos transicao: %s \n", maquina->estadoAtual);
+            // printf("caractereEntrada Transicao: %c \n", maquina->transicoes[i].caracterDeEntrada);
+            // printf("caractereEntrada Funcao: %c \n", caractereEntrada);
+            // printf("Estado de Destino: %s \n", maquina->transicoes[i].estadoDeDestino);
             //if(strcmp(maquina->estadoAtual, "erro") == 0) printf("Erro na mistura\n");
             //if(strcmp(maquina->estadoAtual, maquina->estadoFinal.nomeEstado) == 0) printf("%s\n", nomePocao);
             break;
@@ -130,21 +126,34 @@ void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD *maquina, char
     }
 }
 
-void fazerTransicaoAPD(char caractereEntrada, char *caractereEmpilha, char caractereDesempilha, MaquinaDeEstadosAP* maquina, char *nomePocao){
+void fazerTransicaoAPD(char caractereEntrada, MaquinaDeEstadosAP* maquina){
+    char caractereDesempilha;
     for(int i = 0; i < maquina->numTransicoes; i++){
+        caractereDesempilha = PDesempilha(&maquina->stack);
+        PEmpilha(&(maquina->stack), caractereDesempilha);
+        
         if((strcmp(maquina->transicoesP[i].transicao.estadoDePartida, maquina->estadoAtual) == 0)
         && (maquina->transicoesP[i].transicao.caracterDeEntrada == caractereEntrada)
         && (maquina->transicoesP[i].charDesempilha == caractereDesempilha)){
-            if(maquina->stack.pTopo->caractere == caractereDesempilha){
-                PDesempilha(&(maquina->stack));
-            }
-            for(int j = 0; j < strlen(caractereEmpilha);j++){
-                PEmpilha(&(maquina->stack),caractereEmpilha[j]);
+            
+            PDesempilha(&(maquina->stack));
+            for(int j = 0; j < strlen(maquina->transicoesP[i].charEmpilha);j++){
+                PEmpilha(&(maquina->stack), maquina->transicoesP[i].charEmpilha[j]);
+                imprimeReacao(maquina->transicoesP[i].charEmpilha[j]);
             }
             strcpy(maquina->estadoAtual, maquina->transicoesP[i].transicao.estadoDeDestino);
-                
-            if(strcmp(maquina->estadoAtual, "erro") == 0) printf("Erro na mistura\n");
-            if(strcmp(maquina->estadoAtual, maquina->estadoFinal.nomeEstado) == 0 && (PEhVazia(&maquina->stack))) printf("%s\n", nomePocao);
+
+            // printf("\nEstado Partida: %s \n", maquina->transicoesP[i].transicao.estadoDePartida);
+            // printf("Estado atual apos transicao: %s \n", maquina->estadoAtual);
+            // printf("caractereEntrada Transicao: %c \n", maquina->transicoesP[i].transicao.caracterDeEntrada);
+            // printf("caractereEntrada Funcao: %c \n", caractereEntrada);
+            // printf("Estado de Destino: %s \n", maquina->transicoesP[i].transicao.estadoDeDestino);
+            // printf("Caractere Empilha: %s \n", maquina->transicoesP[i].charEmpilha);
+            // printf("Caractere Desempilha: %c \n", maquina->transicoesP[i].charDesempilha);
+            // printf("Caractere no topo da pilha: %c \n", caractereDesempilha);
+
+            //if(strcmp(maquina->estadoAtual, "erro") == 0) printf("Erro na mistura\n");
+            //if(strcmp(maquina->estadoAtual, maquina->estadoFinal.nomeEstado) == 0 && (PEhVazia(&maquina->stack))) printf("%s\n", nomePocao);
         }
     }  
 }

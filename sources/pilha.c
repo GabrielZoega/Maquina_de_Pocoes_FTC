@@ -26,7 +26,7 @@ char PDesempilha(Pilha* pilha){
 
     apontador pAux;
     char caractere;
-    if (PEhVazia(pilha)) return '!';
+    if (PEhVazia(pilha)) return '\0';
 
     pAux = pilha->pTopo;
     pilha->pTopo = pAux->pProx;

@@ -1,7 +1,8 @@
-Q: I A C M L Final
+Q: I A C M L erro Final
 I: I
 F: Final
 I -> A      | a |   | V
+A -> erro   | f |   |
 A -> C      | c | V | E
 C -> M      | m | E | C
 M -> L      | l | C | S

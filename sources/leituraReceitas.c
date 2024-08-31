@@ -138,7 +138,8 @@ void leArquivo(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, c
     int numTransicoes = 0;
     int numEstados = 0;
     char estados[100];
-
+    sscanf(nomeArquivo, "receitas/%[^.txt]s", maquinaAFD->estadoFinal.nomePocao);
+    sscanf(nomeArquivo, "receitas/%[^.txt]s", maquinaAP->estadoFinal.nomePocao);
     leEstados(maquinaAFD, maquinaAP, nomeArquivo, estados, &numEstados, &numTransicoes, tipoAutomato);
 
     inicializaAutomato(maquinaAFD, maquinaAP, numEstados, numTransicoes, tipoAutomato);

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "pilha.h"
+#include "reacoes.h"
 
 #define AFD 1
 #define AP 2
@@ -72,9 +73,9 @@ void adicionaTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maqu
 void adicionaTransicaoAF(MaquinaDeEstadosAFD *maquina, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice);
 void adicionaTransicaoAP(MaquinaDeEstadosAP *maquina, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice,char *caractereEmpilha, char caractereDesempilha);
 
-void fazerTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char caractereEntrada, /*char *caractereEmpilha, char caractereDesempilha, */char *nomePocao, int tipoAutomato);
-void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD * maquina, char *nomePocao);
-void fazerTransicaoAPD(char caractereEntrada, char* caractereEmpilha, char caractereDesempilha, MaquinaDeEstadosAP* maquina,char *nomePocao);
+void fazerTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char caractereEntrada, int tipoAutomato);
+void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD * maquina);
+void fazerTransicaoAPD(char caractereEntrada, MaquinaDeEstadosAP* maquina);
 
 void resultado(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, int tipoAutomato);
 void resultadoAFD(MaquinaDeEstadosAFD *maquina);
