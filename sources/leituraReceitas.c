@@ -88,7 +88,15 @@ void guardaTransicaoAP(MaquinaDeEstadosAP *maquinaAP, char *string, int *proximo
     char *tokenLinha = strtok(auxLinha, "|"); //token recebe a primeira string, a transicao
 
     strcpy(auxTransicao, tokenLinha);
+
     tokenLinha = strtok(NULL, "|"); //token recebe a string depois de '|', os caracteres de entrada
+    strcpy(auxCaracteres, tokenLinha);
+
+    tokenLinha = strtok(NULL, "|"); //token recebe a string depois do 2o '|', o que é desempilhado
+    strcpy(auxDesempilha, tokenLinha);
+
+    tokenLinha = strtok(NULL, "|"); //token recebe a string depois do 2o '|', o que é empilhado
+    strcpy(auxEmpilha, tokenLinha);
 
     char *tokenTransicao = strtok(auxTransicao, " "); //token recebe a primeira string, o estado de partida
     strcpy(estadoPartida, tokenTransicao);
@@ -96,13 +104,6 @@ void guardaTransicaoAP(MaquinaDeEstadosAP *maquinaAP, char *string, int *proximo
     tokenTransicao = strtok(NULL, " "); //token recebe a terceira string, o estado de destino
     strcpy(estadoDestino, tokenTransicao);
 
-    strcpy(auxCaracteres, tokenLinha);
-
-    tokenLinha = strtok(NULL, "|"); //token recebe a string depois do 2o '|', o que é desempilhado
-    strcpy(auxDesempilha, tokenLinha);
-
-    tokenLinha = strtok(NULL, "|");
-    strcpy(auxEmpilha, tokenLinha);
 
     // armazena o simbolo a ser desempilhado
     char *tokenDesempilha = strtok(auxDesempilha, " ");
@@ -116,7 +117,9 @@ void guardaTransicaoAP(MaquinaDeEstadosAP *maquinaAP, char *string, int *proximo
     // armazena o simbolo a ser empilhado
     char *tokenEmpilha = strtok(auxEmpilha, " ");
     while (tokenEmpilha != NULL) {
-        if(tokenDesempilha[0] != '\t'){
+        if(tokenEmpilha[0] != '\t'){
+        	if(tokenEmpilha[strlen(tokenEmpilha)-1] == '\n')
+        		tokenEmpilha[strlen(tokenEmpilha)-1] = '\0';
             strcpy(caracteresEmpilha, tokenEmpilha);
         }
         tokenEmpilha = strtok(NULL, " ");
