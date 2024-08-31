@@ -70,7 +70,7 @@ void adicionaEstadoAP(MaquinaDeEstadosAP *maquina, char *estado, int indice);
 
 void adicionaTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice, int tipoAutomato, char *caractereEmpilha, char caractereDesempilha);
 void adicionaTransicaoAF(MaquinaDeEstadosAFD *maquina, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice);
-void adicionaTransicaoAP(MaquinaDeEstadosAP *maquina, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice,char caractereEmpilha, char caractereDesempilha);
+void adicionaTransicaoAP(MaquinaDeEstadosAP *maquina, char *estadoPartida, char *estadoDestino, char caractereEntrada, int indice,char *caractereEmpilha, char caractereDesempilha);
 
 void fazerTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char caractereEntrada, /*char *caractereEmpilha, char caractereDesempilha, */char *nomePocao, int tipoAutomato);
 void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD * maquina, char *nomePocao);
@@ -79,4 +79,5 @@ void fazerTransicaoAPD(char caractereEntrada, char* caractereEmpilha, char carac
 void resultado(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, int tipoAutomato);
 void resultadoAFD(MaquinaDeEstadosAFD *maquina);
 void resultadoAP(MaquinaDeEstadosAP *maquina);
+
 #endif

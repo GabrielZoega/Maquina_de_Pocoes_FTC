@@ -1,0 +1,9 @@
+Q: I A C M L Final
+I: I
+F: Final
+I -> A      | a |   | V
+A -> C      | c | V | E
+C -> M      | m | E | C
+M -> L      | l | C | S
+L -> Final  | f | S | 
+---

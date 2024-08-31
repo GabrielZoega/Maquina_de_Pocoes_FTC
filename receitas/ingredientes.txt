@@ -1,0 +1,27 @@
+A   agua onírica
+B   bunda de barata
+C   cabelo de velho
+D   dente de alho
+F   fungo de pão
+L   língua de sapo
+M   mel de vespa
+N   nariz de capivara
+O   olho de morcego
+P   penas de coruja
+T   tromba de anta
+U   unha de camelo
+
+Reações
+
+V vapor
+A amarga
+E embranquece
+R aromatiza
+X explode
+S fica viscoso
+C adoça
+F fica verde
+B borbulha
+P poção grita
+D decanta
+G engrossa

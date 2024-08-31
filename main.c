@@ -22,21 +22,22 @@ void execucao(MaquinaDeEstadosAFD *maquinaAF, MaquinaDeEstadosAP *maquinaAP, int
     char ingrediente,simOuNao;  
     int controle = 0;
     //realiza a leitura 
-    if(tipoAutomato == AFD) leArquivo(maquinaAF, &maquinaAP, "receitas/entrada.txt", AFD);    
-    else if(tipoAutomato == AP) leArquivo(maquinaAP, &maquinaAP, "receitas/entrada.txt", AP);
+    if(tipoAutomato == AFD) leArquivo(maquinaAF, maquinaAP, "receitas/entrada.txt", AFD);    
+    else if(tipoAutomato == AP) leArquivo(maquinaAF, maquinaAP, "receitas/pocao do amor.txt", AP);
 
     printf("Insira o símbolo do primeiro ingrediente da receita: ");
-    scanf("%c", &ingrediente);
+    scanf(" %c", &ingrediente);
+    fazerTransicao(maquinaAF, maquinaAP, ingrediente, "teste", tipoAutomato);
 
     while(controle == 0){
-        printf("Deseja inserir mais um ingrediente(s/n)?\n");
-        scanf("%c", &simOuNao);
+        printf("\nDeseja inserir mais um ingrediente(s/n)?\n");
+        scanf(" %c", &simOuNao);
         
         //usuario digita s
         if(simOuNao == 's' || simOuNao == 'S'){
             printf("Qual ingrediente será inserido: ");
-            scanf("%c", &ingrediente);
-            // fazerTransicao(maquinaAF, maquinaAP, ingrediente);
+            scanf(" %c", &ingrediente);
+            fazerTransicao(maquinaAF, maquinaAP, ingrediente, "teste", tipoAutomato);
 
         // usuario digita n
         }else if (simOuNao != 's' && simOuNao != 'S'){

@@ -29,7 +29,7 @@ void alocaEstadosAF(MaquinaDeEstadosAFD *maquina, int numEstados){
         maquina->estados[i] = (char*) malloc(sizeof(char) * TAM_ESTADO);
         strcpy(maquina->estados[i], "");
     }
-    strcpy(maquina->estadoAtual, "");
+    strcpy(maquina->estadoAtual, maquina->estadoInicial);
     strcpy(maquina->estadoFinal.nomeEstado, "");
     strcpy(maquina->estadoInicial, "");
 }
@@ -40,7 +40,7 @@ void alocaEstadosAP(MaquinaDeEstadosAP *maquina, int numEstados){
         maquina->estados[i] = (char*) malloc(sizeof(char) * TAM_ESTADO);
         strcpy(maquina->estados[i], "");
     }
-    strcpy(maquina->estadoAtual, "");
+    strcpy(maquina->estadoAtual, maquina->estadoInicial);
     strcpy(maquina->estadoFinal.nomeEstado, "");
     strcpy(maquina->estadoInicial, "");
 }
@@ -51,6 +51,7 @@ void alocaTransicoes(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquin
 }
 
 void alocaTransicoesAF(MaquinaDeEstadosAFD *maquina, int numTransicoes){
+    maquina->numTransicoes = numTransicoes;
     maquina->transicoes = (Transicao*) malloc(sizeof(Transicao) * numTransicoes);
     for(int i = 0; i < numTransicoes; i++){
         maquina->transicoes[i].caracterDeEntrada = '\0';
@@ -60,6 +61,7 @@ void alocaTransicoesAF(MaquinaDeEstadosAFD *maquina, int numTransicoes){
 }
 
 void alocaTransicoesAP(MaquinaDeEstadosAP *maquina, int numTransicoes){
+    maquina->numTransicoes = numTransicoes;
     maquina->transicoesP = (TransicaoP*) malloc (sizeof(TransicaoP) * numTransicoes);
     for(int i = 0; i < numTransicoes; i++){
         maquina->transicoesP[i].transicao.caracterDeEntrada = '\0';
@@ -100,24 +102,30 @@ void adicionaTransicaoAP(MaquinaDeEstadosAP *maquina, char *estadoPartida, char 
     strcpy(maquina->transicoesP[indice].transicao.estadoDeDestino, estadoDestino);
     strcpy(maquina->transicoesP[indice].transicao.estadoDePartida, estadoPartida);
     maquina->transicoesP[indice].charDesempilha = caractereDesempilha;
-    maquina->transicoesP[indice].charEmpilha = (char*) malloc (sizeof(char) * len(caractereEmpilha));
-    for(int k = 0; k < len(caractereEmpilha); k++){
+    maquina->transicoesP[indice].charEmpilha = (char*) malloc (sizeof(char) * strlen(caractereEmpilha));
+    for(int k = 0; k < strlen(caractereEmpilha); k++){
         maquina->transicoesP[indice].charEmpilha[k] = caractereEmpilha[k]; // tem que conferir onde tá alocando o espaço pra esses caracteres de entrada.
     }
 }
 
-void fazerTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char caractereEntrada, char *caractereEmpilha, char caractereDesempilha, char *nomePocao, int tipoAutomato){
+void fazerTransicao(MaquinaDeEstadosAFD *maquinaAFD, MaquinaDeEstadosAP *maquinaAP, char caractereEntrada /*, char *caractereEmpilha, char caractereDesempilha */, char *nomePocao, int tipoAutomato){
 	if(tipoAutomato == AFD) fazerTransicaoAFD(caractereEntrada, maquinaAFD, nomePocao);
-	else if(tipoAutomato == AP) fazerTransicaoAPD(caractereEntrada, caractereEmpilha, caractereDesempilha, maquinaAP, nomePocao);
+	//else if(tipoAutomato == AP) fazerTransicaoAPD(caractereEntrada, caractereEmpilha, caractereDesempilha, maquinaAP, nomePocao);
 }
 
 void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD *maquina, char *nomePocao){
-    
     for(int i = 0; i < maquina->numTransicoes; i++){
-        if((strcmp(maquina->transicoes->estadoDePartida, maquina->estadoAtual) == 0) && (maquina->transicoes->caracterDeEntrada == caractereEntrada)){
-            strcpy(maquina->estadoAtual, maquina->transicoes->estadoDeDestino);
-            if(strcmp(maquina->estadoAtual, "erro") == 0) printf("Erro na mistura\n");
-            if(strcmp(maquina->estadoAtual, maquina->estadoFinal.nomeEstado) == 0) printf("%s\n", nomePocao);
+        
+        if((strcmp(maquina->transicoes[i].estadoDePartida, maquina->estadoAtual) == 0) && (maquina->transicoes[i].caracterDeEntrada == caractereEntrada)){
+            strcpy(maquina->estadoAtual, maquina->transicoes[i].estadoDeDestino);
+            printf("Estado Partida: %s \n", maquina->transicoes[i].estadoDePartida);
+            printf("Estado atual apos transicao: %s \n", maquina->estadoAtual);
+            printf("caractereEntrada Transicao: %c \n", maquina->transicoes[i].caracterDeEntrada);
+            printf("caractereEntrada Funcao: %c \n", caractereEntrada);
+            printf("Estado de Destino: %s \n", maquina->transicoes[i].estadoDeDestino);
+            //if(strcmp(maquina->estadoAtual, "erro") == 0) printf("Erro na mistura\n");
+            //if(strcmp(maquina->estadoAtual, maquina->estadoFinal.nomeEstado) == 0) printf("%s\n", nomePocao);
+            break;
         }
     }
 }
