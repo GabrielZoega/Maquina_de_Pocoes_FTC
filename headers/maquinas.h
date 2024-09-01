@@ -3,6 +3,8 @@
 
 #define TAM_ESTADO 8
 #define TAM_POCAO 50
+#define TEXT_COLOR_256(x)    "\033[38;5;" x "m"
+#define RESET       "\033[0m"
 
 #include <stdio.h>
 #include <stdlib.h>

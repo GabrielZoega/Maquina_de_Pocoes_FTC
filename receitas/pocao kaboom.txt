@@ -1,0 +1,16 @@
+Q: I B U N D A erro F
+I: I
+F: F
+I -> B 		| b
+I -> B 		| u
+I -> B 		| n
+I -> B 		| d 
+I -> B 		| a
+B -> U 	    | d
+U -> F 		| d
+U -> N 	    | b
+N -> D      | a
+N -> F      | b
+D -> A      | a
+A -> F      | u
+---
