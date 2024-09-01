@@ -111,7 +111,9 @@ void fazerTransicaoAFD(char caractereEntrada, MaquinaDeEstadosAFD *maquina){
     int fezTransicao = 0;
     for(int i = 0; i < maquina->numTransicoes; i++){
         
-        if((strcmp(maquina->transicoes[i].estadoDePartida, maquina->estadoAtual) == 0) && (maquina->transicoes[i].caracterDeEntrada == caractereEntrada)){
+        if((strcmp(maquina->transicoes[i].estadoDePartida, maquina->estadoAtual) == 0) 
+        && (maquina->transicoes[i].caracterDeEntrada == caractereEntrada)){
+
             strcpy(maquina->estadoAtual, maquina->transicoes[i].estadoDeDestino);
             printf(TEXT_COLOR_256("197")  "Transição: ");
             printf("%s -> ",maquina->transicoes[i].estadoDePartida);
@@ -137,9 +139,10 @@ void fazerTransicaoAPD(char caractereEntrada, MaquinaDeEstadosAP* maquina){
 
         if((strcmp(maquina->transicoesP[i].transicao.estadoDePartida, maquina->estadoAtual) == 0)
         && (maquina->transicoesP[i].transicao.caracterDeEntrada == caractereEntrada)
-        && ((maquina->transicoesP[i].charDesempilha == caractereDesempilha) || (maquina->transicoesP[i].charDesempilha == '\0'))){
+        && ((maquina->transicoesP[i].charDesempilha == caractereDesempilha) 
+        || (maquina->transicoesP[i].charDesempilha == '\0'))){
             
-            PDesempilha(&(maquina->stack));
+            if(maquina->transicoesP[i].charDesempilha != '\0') PDesempilha(&(maquina->stack));
             for(int j = 0; j < strlen(maquina->transicoesP[i].charEmpilha);j++){
                 PEmpilha(&(maquina->stack), maquina->transicoesP[i].charEmpilha[j]);
                 imprimeReacao(maquina->transicoesP[i].charEmpilha[j]);

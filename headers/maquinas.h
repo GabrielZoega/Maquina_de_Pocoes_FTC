@@ -51,7 +51,6 @@ typedef struct maquinaAP{
     int numTransicoes;
     Pilha stack;
     TransicaoP *transicoesP;
-    // talvez adicionar o resto da palavra 
 } MaquinaDeEstadosAP;
 
 //3 ingredientes e transições no mínimo
